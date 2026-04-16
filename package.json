@@ -1,0 +1,67 @@
+{
+  "name": "unisoc-spd-pac-tool",
+  "version": "1.0.0",
+  "description": "Unisoc Spreadtrum PAC Extractor & Repacker",
+  "author": "Unisoc PAC Tool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build": "electron-builder --win",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder --win --linux"
+  },
+  "build": {
+    "appId": "com.unisoc.pac.tool",
+    "productName": "Unisoc PAC Tool",
+    "copyright": "Copyright © 2024",
+    "files": [
+      "main.js",
+      "renderer.js",
+      "index.html",
+      "style.css",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "extractor.py",
+        "to": "extractor.py"
+      },
+      {
+        "from": "pack_pac_enhanced.py",
+        "to": "pack_pac_enhanced.py"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName} ${version} Setup.${ext}"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Unisoc PAC Tool",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "language": 1046
+    },
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}

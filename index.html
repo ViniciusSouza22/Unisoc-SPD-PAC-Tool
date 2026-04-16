@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unisoc SPD Pac Extractor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <a class="logo" href="#">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeMbUAoHrH3nAxCvvgtEpuIbKmshQIPL6SxQ&s" class="img">
+            </a>
+            <span class="title-text">
+                <i class="fas fa-microchip"></i> Unisoc Spreadtrum Universal
+            </span>
+            <div class="window-controls">
+                <div class="window-btn minimize-btn" id="minimizeBtn"></div>
+                <div class="window-btn maximize-btn" id="maximizeBtn"></div>
+                <div class="window-btn close-btn" id="closeBtn"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Painel Esquerdo: Extrair PAC -->
+            <div class="panel extraction-panel">
+                <div class="panel-header">
+                    <i class="fas fa-file-archive"></i> Arquivo PAC
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-primary" id="selectPacBtn">
+                        <i class="fas fa-folder-open"></i> Selecionar arquivo .PAC
+                    </button>
+                    <div class="info-box" id="pacPath">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Nenhum arquivo selecionado</span>
+                    </div>
+                    <div class="info-box" id="pacInfo" style="display: none;"></div>
+                    
+                    <div class="file-list-container">
+                        <div class="file-list-header">
+                            <i class="fas fa-list"></i> Partições
+                        </div>
+                        <div class="file-list" id="fileListContainer">
+                            <div class="file-item empty">
+                                <i class="fas fa-inbox"></i>
+                                <span>Selecione um arquivo PAC</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-success" id="extractBtn" disabled>
+                        <i class="fas fa-file-export"></i> Extrair PAC
+                    </button>
+                    
+                    <div class="progress-wrapper">
+                        <div class="progress-label">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progresso da Extração</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="extractProgressFill"></div>
+                        </div>
+                        <div class="progress-percent" id="extractProgressText">0%</div>
+                    </div>
+                    
+                    <div class="status-box" id="extractStatus">
+                        <i class="fas fa-circle-info"></i>
+                        <span>Aguardando início</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel Central: Log de Extração -->
+            <div class="panel log-panel">
+                <div class="panel-header">
+                    <i class="fas fa-terminal"></i> Log de Extração
+                </div>
+                <div class="panel-body">
+                    <div class="log-area" id="logArea">
+                        <div class="log-entry info">
+                            <span class="log-time">[--:--:--]</span>
+                            <span class="log-message">🎉 Sistema pronto. Selecione um arquivo PAC para começar.</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="clearLogsBtn">
+                        <i class="fas fa-broom"></i> Limpar Logs
+                    </button>
+                </div>
+            </div>
+
+            <!-- Painel Direito: Empacotar PAC (ATUALIZADO) -->
+            <div class="panel repack-panel">
+                <div class="panel-header">
+                    <i class="fas fa-box-archive"></i> Empacotar PAC
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-primary" id="selectFolderBtn">
+                        <i class="fas fa-folder-open"></i> Selecionar pasta de partições
+                    </button>
+                    <div class="info-box" id="repackFolderPath">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Nenhuma pasta selecionada</span>
+                    </div>
+                    
+                    <div class="file-list-container">
+                        <div class="file-list-header">
+                            <i class="fas fa-list"></i> Arquivos para empacotar
+                        </div>
+                        <div class="file-list" id="repackFileList">
+                            <div class="file-item empty">
+                                <i class="fas fa-inbox"></i>
+                                <span>Selecione uma pasta</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- BOTÃO ATUALIZADO -->
+                    <button class="btn btn-primary" id="selectOutputPacBtn">
+                        <i class="fas fa-folder-open"></i> Selecionar pasta de destino
+                    </button>
+                    <div class="info-box" id="repackOutputPath">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Nenhuma pasta de destino definida</span>
+                    </div>
+                    
+                    <button class="btn btn-warning" id="startRepackBtn" disabled>
+                        <i class="fas fa-box-open"></i> Empacotar PAC
+                    </button>
+                    
+                    <div class="progress-wrapper">
+                        <div class="progress-label">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progresso do empacotamento</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="repackProgressFill"></div>
+                        </div>
+                        <div class="progress-percent" id="repackProgressText">0%</div>
+                    </div>
+                    
+                    <div class="status-box" id="repackStatus">
+                        <i class="fas fa-circle-info"></i>
+                        <span>Aguardando início</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra inferior de status global -->
+        <div class="bottom-bar">
+            <div class="status-indicator">
+                <i class="fas fa-circle-dot"></i>
+                <span id="globalStatus">Pronto</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    
+    <script src="renderer.js"></script>
+</body>
+</html>
